@@ -2,40 +2,55 @@ import time
 import threading
 from pinecone import Pinecone, ServerlessSpec
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
-from langchain.vectorstores.pinecone import Pinecone as LangchainPinecone
+from langchain_pinecone import PineconeVectorStore
+from langchain_core.documents import Document
 from config import PINECONE_API_KEY
 
 # Initialize Pinecone client
 pc = Pinecone(api_key=PINECONE_API_KEY)
 
-# Initialize Google embedding model
+# Initialize embedding model
 embedding_model = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
 
-# Create vector store (index) using session_id
+# Create vector store using session_id
 def create_vector_store(session_id, texts):
     index_name = session_id
-    if not pc.has_index(index_name):
+
+    # Create index if not exists
+    existing_indexes = [index["name"] for index in pc.list_indexes()]
+    if index_name not in existing_indexes:
         pc.create_index(
             name=index_name,
-            dimension=768,  # should match embedding size
+            dimension=768,  # Adjust this if your model outputs a different dimension
+            metric="cosine",
             spec=ServerlessSpec(cloud="aws", region="us-east-1")
         )
-        # Wait for the index to become ready
-        while True:
-            description = pc.describe_index(index_name)
-            if description.status['ready']:
-                break
+        while not pc.describe_index(index_name).status["ready"]:
             time.sleep(2)
 
-    # Add documents to index using Langchain wrapper
-    vectorstore = LangchainPinecone.from_texts(texts, embedding_model, index_name=index_name)
+    # Get index
+    index = pc.Index(index_name)
+
+    # Convert texts into Document format
+    documents = [Document(page_content=text) for text in texts]
+
+    # Create vector store and add documents
+    vectorstore = PineconeVectorStore(index=index, embedding=embedding_model)
+    vectorstore.add_documents(documents=documents)
 
 # Query vector store
 def query_vector_store(session_id, question):
     index_name = session_id
-    vectorstore = LangchainPinecone.from_existing_index(index_name, embedding_model)
-    chain = get_chain()  # Make sure you have this function
-    docs = vectorstore.similarity_search(question)
+    index = pc.Index(index_name)
+
+    vectorstore = PineconeVectorStore(index=index, embedding=embedding_model)
+    retriever = vectorstore.as_retriever(
+        search_type="similarity_score_threshold",
+        search_kwargs={"k": 3, "score_threshold": 0.5},
+    )
+
+    docs = retriever.invoke(question)
+    chain = get_chain()  # Make sure you define this in your code
     result = chain({"input_documents": docs, "question": question}, return_only_outputs=True)
     return result["output_text"]
 
