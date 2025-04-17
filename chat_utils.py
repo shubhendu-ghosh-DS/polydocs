@@ -1,6 +1,10 @@
 from langchain.prompts import PromptTemplate
+import google.generativeai as genai
 from langchain.chains.question_answering import load_qa_chain
 from langchain_google_genai import ChatGoogleGenerativeAI
+from config import GOOGLE_API_KEY
+
+genai.configure(api_key=GOOGLE_API_KEY)
 
 def get_chain():
     template = """
