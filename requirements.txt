@@ -6,3 +6,4 @@ python-dotenv
 pinecone
 langchain
 langchain-google-genai
+langchain-community
