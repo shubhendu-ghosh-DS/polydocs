@@ -5,6 +5,7 @@ from vector_handler import create_vector_store, delete_vector_store, query_vecto
 from pdf_utils import extract_text_from_pdfs, split_text
 import os
 from dotenv import load_dotenv
+from datetime import datetime, timedelta
 
 load_dotenv()
 
@@ -19,10 +20,18 @@ async def upload_pdfs(background_tasks: BackgroundTasks, files: list[UploadFile]
 
     create_vector_store(session_id, chunks)
 
+    created_at = datetime.utcnow()
+    will_be_removed_at = created_at + timedelta(minutes=15)
+
     # Schedule deletion after 15 minutes
     background_tasks.add_task(delete_vector_store, session_id, delay=900)
 
-    return {"session_id": session_id, "message": "PDF uploaded and processed."}
+    return {
+        "session_id": session_id,
+        "message": "PDF uploaded and processed.",
+        "created_at": created_at.isoformat() + "Z",
+        "will_be_removed_at": will_be_removed_at.isoformat() + "Z"
+    }
 
 
 @app.post("/query/")
