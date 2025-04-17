@@ -6,6 +6,8 @@ from langchain_pinecone import PineconeVectorStore
 from langchain_core.documents import Document
 from config import PINECONE_API_KEY
 from chat_utils import get_chain
+from fastapi import HTTPException
+from pinecone.openapi_support.exceptions import NotFoundException
 
 # Initialize Pinecone client
 pc = Pinecone(api_key=PINECONE_API_KEY)
@@ -42,18 +44,30 @@ def create_vector_store(session_id, texts):
 # Query vector store
 def query_vector_store(session_id, question):
     index_name = session_id
-    index = pc.Index(index_name)
+    try:
+        index = pc.Index(index_name)
 
-    vectorstore = PineconeVectorStore(index=index, embedding=embedding_model)
-    retriever = vectorstore.as_retriever(
-        search_type="similarity_score_threshold",
-        search_kwargs={"k": 3, "score_threshold": 0.5},
-    )
+        vectorstore = PineconeVectorStore(index=index, embedding=embedding_model)
+        retriever = vectorstore.as_retriever(
+            search_type="similarity_score_threshold",
+            search_kwargs={"k": 3, "score_threshold": 0.5},
+        )
 
-    docs = retriever.invoke(question)
-    chain = get_chain()  # Make sure you define this in your code
-    result = chain({"input_documents": docs, "question": question}, return_only_outputs=True)
-    return result["output_text"]
+        docs = retriever.invoke(question)
+        chain = get_chain()
+        result = chain({"input_documents": docs, "question": question}, return_only_outputs=True)
+        return result["output_text"]
+
+    except NotFoundException as e:
+        raise HTTPException(
+            status_code=404,
+            detail=f"Session '{session_id}' has expired or does not exist."
+        )
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"An unexpected error occurred: {str(e)}"
+        )
 
 # Delete vector store with optional delay
 def delete_vector_store(index_name, delay=0):
