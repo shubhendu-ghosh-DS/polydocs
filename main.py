@@ -3,7 +3,6 @@ from fastapi.responses import JSONResponse
 from uuid import uuid4
 from vector_handler import create_vector_store, delete_vector_store, query_vector_store
 from pdf_utils import extract_text_from_pdfs, split_text
-from chat_utils import get_chain
 import os
 from dotenv import load_dotenv
 
