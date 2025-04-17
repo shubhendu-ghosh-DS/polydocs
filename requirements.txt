@@ -3,6 +3,6 @@ uvicorn
 python-multipart
 pypdf2
 python-dotenv
-pinecone-client
+pinecone
 langchain
 langchain-google-genai
