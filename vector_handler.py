@@ -5,6 +5,7 @@ from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain_pinecone import PineconeVectorStore
 from langchain_core.documents import Document
 from config import PINECONE_API_KEY
+from chat_utils import get_chain
 
 # Initialize Pinecone client
 pc = Pinecone(api_key=PINECONE_API_KEY)
