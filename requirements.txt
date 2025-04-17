@@ -5,6 +5,7 @@ pypdf2
 python-dotenv
 pinecone
 langchain
+langchain-pinecone
 langchain-google-genai
 langchain-community
 google-generativeai
