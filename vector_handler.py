@@ -3,9 +3,10 @@ import threading
 from pinecone import Pinecone, ServerlessSpec
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain.vectorstores.pinecone import Pinecone as LangchainPinecone
+from config import PINECONE_API_KEY
 
 # Initialize Pinecone client with API key
-pc = Pinecone(api_key="YOUR_API_KEY")  # Replace with your actual key or use os.getenv if needed
+pc = Pinecone(api_key=PINECONE_API_KEY)  # Replace with your actual key or use os.getenv if needed
 
 # Initialize embedding model
 embedding_model = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
