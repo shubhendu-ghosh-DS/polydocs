@@ -13,7 +13,7 @@ load_dotenv()
 app = FastAPI()
 
 
-@app.post("/upload/")
+@app.post("/upload")
 async def upload_pdfs(background_tasks: BackgroundTasks, files: list[UploadFile] = File(...)):
     session_id = str(uuid4())
     raw_text = await extract_text_from_pdfs(files)
@@ -35,7 +35,7 @@ async def upload_pdfs(background_tasks: BackgroundTasks, files: list[UploadFile]
     }
 
 
-@app.post("/query/")
+@app.post("/query")
 async def query_pdf(session_id: str = Form(...), question: str = Form(...)):
     try:
         response = query_vector_store(session_id, question)
@@ -46,7 +46,7 @@ async def query_pdf(session_id: str = Form(...), question: str = Form(...)):
         raise HTTPException(status_code=500, detail=str(e))
 
 
-@app.post("/clear/")
+@app.post("/clear")
 async def clear_session(session_id: str = Form(...)):
     try:
         delete_vector_store(session_id)
