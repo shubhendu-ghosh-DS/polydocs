@@ -66,12 +66,12 @@ Manually clears a session before the automatic timeout.
 ```
 
 ## 📦 Tech Stack  
-- FastAPI – Web framework  
-- Pinecone – Vector database  
-- LangChain – LLM orchestration  
-- Google Generative AI – Language model backend  
-- PyPDF2 – PDF parsing  
-- Docker – Containerization  
+- [FastAPI](https://fastapi.tiangolo.com/) – Web framework  
+- [Pinecone](https://www.pinecone.io/) – Vector database  
+- [LangChain](https://www.langchain.com/) – LLM orchestration  
+- [Google Generative AI](https://ai.google.dev/) – Language model backend  
+- [PyPDF2](https://pypi.org/project/PyPDF2/) – PDF parsing  
+- [Docker](https://www.docker.com/) – Containerization  
 
 ## ⚙️ Installation & Usage (Local Development)  
 ### 1. Clone the repository  
