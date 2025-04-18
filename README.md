@@ -65,23 +65,23 @@ Manually clears a session before the automatic timeout.
 }
 ```
 
-📦 Tech Stack  
-FastAPI – Web framework  
-Pinecone – Vector database  
-LangChain – LLM orchestration  
-Google Generative AI – Language model backend  
-PyPDF2 – PDF parsing  
-Docker – Containerization  
+## 📦 Tech Stack  
+- FastAPI – Web framework  
+- Pinecone – Vector database  
+- LangChain – LLM orchestration  
+- Google Generative AI – Language model backend  
+- PyPDF2 – PDF parsing  
+- Docker – Containerization  
 
-⚙️ Installation & Usage (Local Development)  
-1. Clone the repository  
+## ⚙️ Installation & Usage (Local Development)  
+### 1. Clone the repository  
 
 ```bash
 git clone https://github.com/your-username/Polydocs.git
 cd Polydocs
 ```
 
-2. Create a `.env` file  
+### 2. Create a `.env` file  
 
 ```env
 PINECONE_API_KEY=your-key
@@ -89,19 +89,19 @@ GOOGLE_API_KEY=your-key
 # Add any additional keys as needed
 ```
 
-3. Install dependencies  
+### 3. Install dependencies  
 
 ```bash
 pip install -r requirements.txt
 ```
 
-4. Run the application  
+### 4. Run the application  
 
 ```bash
 uvicorn main:app --reload
 ```
 
-🐳 Running with Docker  
+## 🐳 Running with Docker  
 Make sure you have Docker installed.
 
 ```bash
@@ -109,7 +109,7 @@ docker build -t polydocs-backend .
 docker run -p 8000:8000 --env-file .env polydocs-backend
 ```
 
-📁 Project Structure  
+## 📁 Project Structure  
 
 ```bash
 Polydocs/
@@ -122,16 +122,16 @@ Polydocs/
 └── Dockerfile             # (if present) for containerization
 ```
 
-🧠 Motivation  
+## 🧠 Motivation  
 In an era of AI-enhanced productivity, Polydocs allows users to interact with documents more intelligently. Whether it's for research, customer support, or quick document search, Polydocs streamlines PDF interaction using natural language.
 
-📬 Contact  
+## 📬 Contact  
 Built by [Shubhendu Ghosh](https://www.linkedin.com/in/shubhendu-ghosh-ds/)
 
 If you find this project interesting, feel free to ⭐ the repo or connect with me on [LinkedIn](https://www.linkedin.com/in/shubhendu-ghosh-ds/)!
 
 
-📝 License  
+## 📝 License  
 MIT License – Feel free to use and modify.
 
 
