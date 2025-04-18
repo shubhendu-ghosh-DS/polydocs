@@ -5,6 +5,9 @@ Polydocs is a lightweight FastAPI-based backend application that enables users t
 > ⚠️ Note: This repository only includes the backend APIs. A separate frontend can be developed to interact with this API for a complete user-facing application.
 
 ---
+🌐 **Live Demo**: [Try Polydocs APIs on Hugging Face Spaces](https://shubhendu-ghosh-polydocs.hf.space)
+
+---
 
 ## 🚀 Features
 
@@ -123,9 +126,10 @@ Polydocs/
 In an era of AI-enhanced productivity, Polydocs allows users to interact with documents more intelligently. Whether it's for research, customer support, or quick document search, Polydocs streamlines PDF interaction using natural language.
 
 📬 Contact  
-Built by Shubhendu Ghosh  
+Built by [Shubhendu Ghosh](https://www.linkedin.com/in/shubhendu-ghosh-ds/)
 
-If you find this project interesting, feel free to ⭐ the repo or connect with me on LinkedIn!
+If you find this project interesting, feel free to ⭐ the repo or connect with me on [LinkedIn](https://www.linkedin.com/in/shubhendu-ghosh-ds/)!
+
 
 📝 License  
 MIT License – Feel free to use and modify.
